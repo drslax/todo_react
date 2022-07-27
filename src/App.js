@@ -25,7 +25,7 @@ function TodoElems({list, handleRemove, handleCheck}){
     <ul>
       {list.map((item, key) => (
           <li key={key} id={key}>
-            <div className={'listElem'} style={checkedStyle(list[key].checked)} >
+            <div onClick={()=>handleCheck(key)} className={'listElem'} style={checkedStyle(list[key].checked)} >
               <p>{item.message}</p>
               <button onClick={ ()=>handleRemove(key) }>X</button>
             </div>
@@ -69,10 +69,10 @@ function TodoList(){
     localStorage.setItem('list', JSON.stringify(newList));
   }
 
-  function handleCheck(key) {
+  function handleCheck(id) {
     const newList = list;
 
-    newList[key].checked = !newList[key].checked;
+    newList[id].checked = !newList[id].checked;
 
     setList(newList);
   }
