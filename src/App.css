@@ -3,7 +3,8 @@ body {
 }
 
 .listElem > * {
-  margin: 0;
+  margin: 0px;
+  margin-left: 5px;
 }
 
 #bd {

@@ -17,7 +17,8 @@ function TodoBar({message, handleChange, handleAdd}){
 }
 
 const checkedStyle = (checked) => ({
-  backgroundColor: (!checked) ? `aliceblue` : `rgb(73, 73, 73)`,
+  backgroundColor: checked ? 'salmon' : 'aliceblue',
+  color: checked ? 'white' : 'black'
 });
 
 function TodoElems({list, handleRemove, handleCheck}){
@@ -25,9 +26,9 @@ function TodoElems({list, handleRemove, handleCheck}){
     <ul>
       {list.map((item, key) => (
           <li key={key} id={key}>
-            <div onClick={()=>handleCheck(key)} className={'listElem'} style={checkedStyle(list[key].checked)} >
+            <div onClick={()=>handleCheck(key)} className={'listElem'} style={checkedStyle(item.checked)} >
               <p>{item.message}</p>
-              <button onClick={ ()=>handleRemove(key) }>X</button>
+              <button onClick={ (e)=>handleRemove(key, e) }>X</button>
             </div>
           </li>
       ))}
@@ -54,26 +55,24 @@ function TodoList(){
 
   function handleAdd() {
     const newList = list.concat({ message:message, checked:false });
-    console.log(newList)
 
     setList(newList);
     setMessage('');
     localStorage.setItem('list', JSON.stringify(newList));
   }
 
-  function handleRemove(id) {
+  function handleRemove(id, e) {
     const newList = list.filter((item) => list.indexOf(item) !== id);
-    console.log(newList)
-    
-    setList(newList);
     localStorage.setItem('list', JSON.stringify(newList));
+    
+    e.stopPropagation();
+    setList(newList);
   }
 
   function handleCheck(id) {
     const newList = list;
 
     newList[id].checked = !newList[id].checked;
-
     setList(newList);
   }
 
